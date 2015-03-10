@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.device.lookup" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeDeviceLookUp" />
+	
+	<properties entry="OSGI-INF/otb.properties" />
+
+	<reference
+		interface="com.orange.simplebee.SimpleBeeDevice"
+		cardinality="0..n" policy="dynamic" bind="bindSimpleBeeDevice"
+		unbind="unbindSimpleBeeDevice" />
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.notification" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeNotification" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.led" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeLed" />
+	
+	<reference
+		interface="com.orange.simplebee.SimpleBeeDevice"
+		target="(DEVICE_TYPE=BINARY_LIGHT)"
+		cardinality="0..n" policy="dynamic" bind="bindSimpleBeeLed"
+		unbind="unbindSimpleBeeLed" />
+</scr:component>
+
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.button.notification" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeButtonNotification" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+	
+	<property name="DEVICE_SERIAL" value="PUSH_BUTTON@3001"/>
+
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.motion.scenario" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeMotionScenario" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+	
+	<property name="DEVICE_SERIAL" value="DEVICE_SERIAL=MOTION_SENSOR@2001"/>
+	
+	<reference
+		interface="com.orange.simplebee.SimpleBeeDevice"
+		target="(DEVICE_TYPE=BINARY_LIGHT)"
+		cardinality="0..n" policy="dynamic" bind="bindLed"
+		unbind="unbindLed" />
+
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.temperature.notification" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeTemperatureNotification" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+	
+	<property name="DEVICE_SERIAL" value="TEMPERATURE_SENSOR@5000"/>
+
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.light.sensor.notification" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeLightSensorNotification" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+	
+	<property name="DEVICE_SERIAL" value="LIGHT_SENSOR@4000"/>
+
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.sandtimer" immediate="true">
+
+	<implementation
+		class="com.orange.simplebee.simple.application.SimpleBeeSandTimer" />
+	
+	<service>
+	    <provide interface="com.orange.simplebee.SimpleBeeListener"/>
+	</service>
+	
+	<property name="DEVICE_SERIAL" value="SANDTIMER@6001"/>
+	
+	<reference
+		interface="com.orange.simplebee.SimpleBeeDevice"
+		target="(DEVICE_TYPE=SANDTIMER)"
+		cardinality="0..n" policy="dynamic" bind="bindSandTimer"
+		unbind="unbindSandTimer" />
+	
+
+</scr:component>

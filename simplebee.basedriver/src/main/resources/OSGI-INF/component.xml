@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.logger" immediate="true">
+
+	<implementation class="com.orange.simplebee.impl.Logger" />
+
+	<reference interface="org.osgi.service.log.LogService"
+		cardinality="0..1" bind="bindLogService" unbind="unbindLogService"
+		policy="dynamic" />
+</scr:component>
+
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.driver.factory" factory="simplebee.driver.factory">
+
+	<implementation
+		class="fr.liglab.adele.icasa.device.simplebee.driver.impl.SimpleBeeDriverImpl" />
+
+	<service>
+		<provide interface="fr.liglab.adele.icasa.device.simplebee.driver.SimpleBeeDriver" />
+	</service>
+
+	<property name="simplebee.driver.baud.rate" type="Integer" value="115200" />
+	<property name="simplebee.driver.port" type="String" value="NONE" />
+
+	<reference interface="fr.liglab.adele.icasa.device.simplebee.driver.SimpleBeeDeviceTracker"
+		cardinality="0..n" policy="dynamic" bind="bindSimpleBeeDeviceTracker"
+		unbind="unbindSimpleBeeDeviceTracker" />
+</scr:component>
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.driver.manager" immediate="true">
+	
+	<implementation class="com.orange.simplebee.impl.SimpleBeeManager" />
+
+	<property name="service.pid" value="simplebee.driver.manager" />
+
+	<service>
+		<provide interface="org.osgi.service.cm.ManagedService" />
+	</service>
+
+	<reference interface="org.osgi.service.component.ComponentFactory"
+		target="(component.factory=simplebee.driver.factory)" cardinality="1..1"
+		bind="bindSimpleBeeDriverFactory" unbind="unbindSimpleBeeDriverFactory" policy="dynamic" />
+
+	<reference interface="fr.liglab.adele.icasa.device.simplebee.driver.SimpleBeeDriver"
+		cardinality="0..n" bind="bindSimpleBeeDriver" unbind="unbindSimpleBeeDriver"
+		policy="dynamic" />
+
+	<reference interface="org.osgi.service.log.LogService"
+		cardinality="0..1" bind="bindLogService" unbind="unbindLogService" />
+</scr:component>
+
+
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	name="simplebee.basedriver" immediate="true">
+	
+	<implementation class="com.orange.simplebee.impl.Activator" />
+
+	<service>
+		<provide interface="fr.liglab.adele.icasa.device.simplebee.driver.SimpleBeeDeviceTracker" />
+	</service>
+
+	<reference interface="org.osgi.service.log.LogService"
+		cardinality="0..1" policy="dynamic" bind="bindLogService" unbind="unbindLogService" />
+
+	<reference interface="fr.liglab.adele.icasa.device.simplebee.driver.SimpleBeeDriver"
+		cardinality="1..1" policy="dynamic" bind="bindSimpleBeeDriver" unbind="unbindSimpleBeeDriver" />
+
+	<reference interface="com.orange.simplebee.SimpleBeeListener"
+		cardinality="0..n" policy="dynamic" bind="bindSimpleBeeListener" unbind="unbindSimpleBeeListener" />
+</scr:component> 
+
