@@ -5,7 +5,7 @@
 
 	<parent>
 		<groupId>com.orange.dhsa.homeapi</groupId>
-		<artifactId>otb.hab.supplies.applications</artifactId>
+		<artifactId>otb.hab.supplies.simplebee</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 

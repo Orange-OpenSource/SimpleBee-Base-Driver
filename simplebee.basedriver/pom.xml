@@ -5,7 +5,7 @@
 
 	<parent>
 		<groupId>com.orange.dhsa.homeapi</groupId>
-		<artifactId>otb.hab.supplies.basedrivers</artifactId>
+		<artifactId>otb.hab.supplies.simplebee</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 
@@ -20,12 +20,14 @@
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
+			<version>${org.osgi.core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>osgi_R4_compendium</artifactId>
+			<version>${osgi_R4_core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
